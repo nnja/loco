@@ -16,9 +16,6 @@ class Base(object):
 
     ON_HEROKU = os.environ.get('ON_HEROKU')
 
-    SECRET_KEY = 'development key'
-    DEBUG = True
-
 
 class Heroku(Base):
     CACHE_TYPE = 'redis'
@@ -26,8 +23,10 @@ class Heroku(Base):
 
 
 class Production(Heroku):
-    pass
+    SECRET_KEY = os.environ.get('FLASK_SECRET_KEY')
 
 
 class Local(Base):
     CACHE_TYPE = 'simple'
+    FLASK_DEBUG = True
+    SECRET_KEY = 'development key'
